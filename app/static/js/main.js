@@ -112,26 +112,27 @@ if (searchInput) {
 
 // ─── STAR RATING INPUT ──────────────────────────────────────────
 
-// ─── STAR RATING INPUT ──────────────────────────────────────────
-
 document.addEventListener('DOMContentLoaded', function () {
-    const ratingInput = document.getElementById('ratingInput');
     const stars = document.querySelectorAll('.star-input');
+    const ratingInput = document.getElementById('ratingInput');
 
-    if (!ratingInput || stars.length === 0) return;
+    // Book detail page illa na error varama stop aagum
+    if (!stars.length || !ratingInput) return;
 
     function paintStars(value) {
-        stars.forEach((star) => {
-            const starValue = Number(star.dataset.value);
+        stars.forEach((star, index) => {
+            const isSelected = index < value;
 
-            star.classList.toggle('bi-star-fill', starValue <= value);
-            star.classList.toggle('bi-star', starValue > value);
-            star.classList.toggle('text-warning', starValue <= value);
-            star.classList.toggle('text-muted', starValue > value);
+            star.classList.toggle('bi-star-fill', isSelected);
+            star.classList.toggle('bi-star', !isSelected);
+            star.classList.toggle('text-warning', isSelected);
+            star.classList.toggle('text-muted', !isSelected);
         });
     }
 
     stars.forEach((star) => {
+        star.style.cursor = 'pointer';
+
         star.addEventListener('click', function () {
             const value = Number(this.dataset.value);
             ratingInput.value = value;
@@ -142,6 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
             paintStars(Number(this.dataset.value));
         });
     });
+
     const ratingArea = stars[0].parentElement;
 
     ratingArea.addEventListener('mouseleave', function () {
