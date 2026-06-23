@@ -13,13 +13,13 @@
 {% if not request.path.startswith('/admin') %}
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top glass-nav">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('public.index') }}">
-            {% if logo_url %}
-                <img src="{{ logo_url }}" alt="Sans Library" height="40" class="logo-img">
-            {% else %}
-                <span class="brand-text">Sans <span class="text-glow">Library</span></span>
-            {% endif %}
-        </a>
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('public.index') }}">
+    {% if logo_url %}
+        <img src="{{ logo_url }}" alt="Sans Library" height="40" class="logo-img">
+    {% endif %}
+
+    <span class="brand-text">Sans <span class="text-glow">Library</span></span>
+      </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,7 +70,7 @@
                         <i class="bi bi-github"></i>
                     </a>
 
-                    <a href="sangeethamurugan024@gmail.com" class="social-btn" aria-label="Email">
+                   <a href="mailto:sangeethamurugan024@gmail.com" class="social-btn" aria-label="Email">
                         <i class="bi bi-envelope"></i>
                     </a>
                 </div>

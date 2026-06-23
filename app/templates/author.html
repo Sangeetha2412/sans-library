@@ -6,12 +6,13 @@
     <div class="container">
         <div class="row g-5 align-items-center">
 
-            <div class="col-md-4 text-center">
-                <div class="author-avatar-container mb-4">
-                    <div class="author-avatar author-avatar-main">
-                        <i class="bi bi-person-fill"></i>
-                    </div>
-                </div>
+        <div class="author-avatar-container mb-4">
+            <div class="author-avatar author-avatar-main">
+                <img src="{{ url_for('static', filename='images/author.jpg') }}"
+                    alt="Sangeetha M"
+                    class="author-profile-image">
+            </div>
+        </div>
 
                 <div class="author-mini-badge">
                     <i class="bi bi-feather me-2"></i>Writer • Dreamer • Creator

@@ -112,16 +112,40 @@ if (searchInput) {
 
 // ─── STAR RATING INPUT ──────────────────────────────────────────
 
-const stars = document.querySelectorAll('.star-input');
-stars.forEach(star => {
-    star.addEventListener('click', function() {
-        const value = this.dataset.value;
-        document.getElementById('ratingInput').value = value;
-        stars.forEach((s, i) => {
-            s.classList.toggle('bi-star-fill', i < value);
-            s.classList.toggle('bi-star', i >= value);
-            s.classList.toggle('text-warning', i < value);
+// ─── STAR RATING INPUT ──────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', function () {
+    const ratingInput = document.getElementById('ratingInput');
+    const stars = document.querySelectorAll('.star-input');
+
+    if (!ratingInput || stars.length === 0) return;
+
+    function paintStars(value) {
+        stars.forEach((star) => {
+            const starValue = Number(star.dataset.value);
+
+            star.classList.toggle('bi-star-fill', starValue <= value);
+            star.classList.toggle('bi-star', starValue > value);
+            star.classList.toggle('text-warning', starValue <= value);
+            star.classList.toggle('text-muted', starValue > value);
         });
+    }
+
+    stars.forEach((star) => {
+        star.addEventListener('click', function () {
+            const value = Number(this.dataset.value);
+            ratingInput.value = value;
+            paintStars(value);
+        });
+
+        star.addEventListener('mouseenter', function () {
+            paintStars(Number(this.dataset.value));
+        });
+    });
+    const ratingArea = stars[0].parentElement;
+
+    ratingArea.addEventListener('mouseleave', function () {
+        paintStars(Number(ratingInput.value || 0));
     });
 });
 
