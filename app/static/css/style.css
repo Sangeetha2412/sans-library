@@ -973,3 +973,186 @@ body .form-label.text-white {
     line-height: 1.25;
     letter-spacing: -0.5px;
 }
+/* Book detail page title - visible on light card */
+.book-detail-title {
+    color: #172554 !important;
+    font-size: clamp(1.8rem, 3vw, 2.7rem);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+.book-detail-heading {
+    color: #172554 !important;
+    font-weight: 800;
+}
+
+/* BOOK DETAIL PAGE - TEXT COLOR FIX */
+
+.book-detail-title {
+    color: #172554 !important;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.25;
+    font-weight: 800;
+}
+
+.book-detail-heading {
+    color: #172554 !important;
+    font-weight: 800;
+}
+
+.glass-card .text-muted {
+    color: #475569 !important;
+}
+
+.glass-card strong {
+    color: #172554;
+}
+
+/* Other headings in book detail page */
+.glass-card h5.text-white,
+.glass-card h6.text-white,
+h5.text-white,
+h6.text-white {
+    color: #172554 !important;
+}
+
+/* Related books title */
+.container > h5.text-white {
+    color: #172554 !important;
+}
+
+/* LIGHT THEME - MAKE ALL OLD WHITE TEXT VISIBLE */
+
+body:not(.admin-page) .text-white {
+    color: #172554 !important;
+}
+
+body:not(.admin-page) .glass-card h1,
+body:not(.admin-page) .glass-card h2,
+body:not(.admin-page) .glass-card h3,
+body:not(.admin-page) .glass-card h4,
+body:not(.admin-page) .glass-card h5,
+body:not(.admin-page) .glass-card h6 {
+    color: #172554 !important;
+}
+
+/* Keep footer text white */
+.footer-section,
+.footer-section .text-white,
+.footer-section h1,
+.footer-section h2,
+.footer-section h3,
+.footer-section h4,
+.footer-section h5,
+.footer-section h6 {
+    color: white !important;
+}
+
+/* Keep buttons white */
+.btn-glow,
+.btn-primary-glow,
+.author-message-btn,
+.genre-badge {
+    color: white !important;
+}
+
+/* =========================================
+   FIX: TEXT NOT VISIBLE ON LIGHT CARDS
+   ========================================= */
+
+/* Main book titles */
+.book-card h6,
+.book-card .text-white,
+.announcement-card h5,
+.announcement-card .text-white,
+.featured-book-title,
+.book-detail-title,
+.book-detail-heading,
+.glass-card h1,
+.glass-card h2,
+.glass-card h3,
+.glass-card h4,
+.glass-card h5,
+.glass-card h6 {
+    color: #172554 !important;
+    text-shadow: none !important;
+}
+
+/* Normal description / author text */
+.book-card .text-muted,
+.announcement-card .text-muted,
+.glass-card .text-muted {
+    color: #475569 !important;
+}
+
+/* Book title specifically */
+.book-card h6 {
+    font-size: 1rem;
+    line-height: 1.4;
+    min-height: 44px;
+}
+
+/* Announcement title */
+.announcement-card h5 {
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+/* Detail page title */
+.book-detail-title {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: #172554 !important;
+}
+
+/* Featured book title in home */
+.featured-book-title {
+    color: #172554 !important;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+}
+
+/* Description heading */
+.book-detail-heading {
+    color: #172554 !important;
+}
+
+/* Strong labels such as Pages and Released */
+.glass-card strong {
+    color: #172554 !important;
+}
+
+/* Review heading */
+.glass-card .text-white {
+    color: #172554 !important;
+}
+/* FINAL TEXT VISIBILITY FIX */
+
+.book-title-visible {
+    color: #172554 !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
+}
+
+.announcement-title-visible {
+    color: #172554 !important;
+    font-size: 1.2rem !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
+}
+
+.book-detail-title {
+    color: #172554 !important;
+    font-size: clamp(1.8rem, 4vw, 3rem) !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
+}
+
+.book-detail-heading {
+    color: #172554 !important;
+    font-weight: 800 !important;
+}
+
+.book-card p,
+.announcement-card p,
+.book-card .text-muted,
+.announcement-card .text-muted {
+    color: #475569 !important;
+}

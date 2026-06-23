@@ -7,7 +7,10 @@
             {% if book.get_image_list()|length > 0 %}
             <div class="book-slideshow position-relative">
                 {% for img in book.get_image_list() %}
-                <img src="{{ img }}" class="slide-img {% if loop.first %}active{% endif %} w-100" style="max-height:500px;object-fit:contain;background:#120020" alt="Cover">
+               <img src="{{ img }}" 
+                class="slide-img {% if loop.first %}active{% endif %} w-100" 
+                style="max-height:500px; object-fit:contain; background:#eef2ff; border-radius:16px;" 
+                alt="Cover">
                 {% endfor %}
                 {% if book.get_image_list()|length > 1 %}
                 <button class="slide-nav-btn slide-prev"><i class="bi bi-chevron-left"></i></button>
@@ -24,7 +27,9 @@
         <div class="col-md-8">
             <div class="glass-card p-4">
                 <span class="badge genre-badge mb-2">{{ book.genre }}</span>
-                <h1 class="text-white fw-bold mb-2">{{ book.title }}</h1>
+               <h1 style="color: #172554 !important; font-size: 2.4rem; font-weight: 800; line-height: 1.25;" class="mb-2">
+               {{ book.title }}
+               </h1>
                 <p class="text-muted mb-3">by <strong>{{ book.author }}</strong></p>
                 <div class="d-flex align-items-center gap-2 mb-3">
                     {% for i in range(5) %}
@@ -37,7 +42,7 @@
                     {% if book.pages %}<div class="col-6"><strong>Pages:</strong> {{ book.pages }}</div>{% endif %}
                     {% if book.release_date %}<div class="col-6"><strong>Released:</strong> {{ book.release_date.strftime('%b %d, %Y') }}</div>{% endif %}
                 </div>
-                <h5 class="text-white mb-3">Description</h5>
+                <h5 style="color: #172554 !important; font-weight: 800;" class="mb-3">Description</h5>
                 <p class="text-muted mb-4">{{ book.description }}</p>
                 <div class="d-flex gap-2 flex-wrap">
                     {% if book.pdf_link %}
@@ -57,7 +62,7 @@
 
     {% if book.table_of_contents %}
     <div class="glass-card p-4 mb-5">
-        <h5 class="text-white mb-3"><i class="bi bi-list-ul me-2"></i>Table of Contents</h5>
+        <h5 class="book-detail-heading mb-3"><i class="bi bi-list-ul me-2"></i>Table of Contents</h5>
         <p class="text-muted white-space-pre-wrap">{{ book.table_of_contents }}</p>
     </div>
     {% endif %}
@@ -68,7 +73,7 @@
         {% for review in reviews %}
         <div class="mb-3 pb-3 border-bottom border-secondary">
             <div class="d-flex justify-content-between mb-1">
-                <strong class="text-white">{{ review.reviewer_name }}</strong>
+                <strong style="color:#172554;">{{ review.reviewer_name }}</strong>
                 <div class="text-warning">
                     {% for i in range(5) %}
                     <i class="bi bi-star{% if i < review.rating %}-fill{% endif %}"></i>
@@ -108,7 +113,9 @@
     </div>
 
     {% if related_books %}
-    <h5 class="text-white mb-4"><i class="bi bi-lightning-fill me-2 text-glow"></i>Related Books</h5>
+    <h5 class="book-detail-heading mb-4">
+    <i class="bi bi-lightning-fill me-2 text-glow"></i>Related Books
+    </h5>
     <div class="row g-4 mb-5">
         {% for rbook in related_books %}
         <div class="col-md-3">
@@ -119,7 +126,7 @@
                     <div class="book-cover-placeholder"><i class="bi bi-book"></i></div>
                 {% endif %}
                 <div class="p-3">
-                    <h6 class="text-white mb-2">{{ rbook.title }}</h6>
+                   <h6 class="book-title-visible mb-2">{{ rbook.title }}</h6>
                     <a href="{{ url_for('public.book_detail', book_id=rbook.id) }}" class="btn btn-outline-glow btn-sm w-100">View</a>
                 </div>
             </div>
