@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sans Library — Where Stories Find Their Readers{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    {% block head %}{% endblock %}
+</head>
+<body>
+{% if not request.path.startswith('/admin') %}
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top glass-nav">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('public.index') }}">
+            {% if logo_url %}
+                <img src="{{ logo_url }}" alt="Sans Library" height="40" class="logo-img">
+            {% else %}
+                <span class="brand-text">Sans <span class="text-glow">Library</span></span>
+            {% endif %}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto align-items-center gap-1">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.index') }}"><i class="bi bi-house me-1"></i>Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.books') }}"><i class="bi bi-book me-1"></i>Books</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.announcements') }}"><i class="bi bi-megaphone me-1"></i>Announcements</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.author') }}"><i class="bi bi-person me-1"></i>Author</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.contact') }}"><i class="bi bi-envelope me-1"></i>Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endif %}
+<div class="container mt-3">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+{% block content %}{% endblock %}
+
+{% if not request.path.startswith('/admin') %}
+<footer class="footer-section mt-5 py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <h5 class="text-glow mb-2">Sans Library</h5>
+                <p class="text-muted small">Where Stories Find Their Readers.</p>
+                <div class="social-links mt-3 d-flex gap-2">
+                    <a href="#" target="_blank" class="social-btn"><i class="bi bi-instagram"></i></a>
+                    <a href="#" target="_blank" class="social-btn"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" target="_blank" class="social-btn"><i class="bi bi-github"></i></a>
+                    <a href="mailto:contact@sanslib.com" class="social-btn"><i class="bi bi-envelope"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h6 class="text-white mb-3">Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="{{ url_for('public.books') }}" class="footer-link">Browse Books</a></li>
+                    <li><a href="{{ url_for('public.announcements') }}" class="footer-link">Announcements</a></li>
+                    <li><a href="{{ url_for('public.author') }}" class="footer-link">About Author</a></li>
+                    <li><a href="{{ url_for('public.contact') }}" class="footer-link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h6 class="text-white mb-3">Stay Updated</h6>
+                <form action="{{ url_for('public.subscribe') }}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="input-group">
+                        <input type="email" name="email" class="form-control glass-input" placeholder="Your email address">
+                        <button type="submit" class="btn btn-primary-glow">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr class="border-secondary mt-4">
+        <p class="text-center text-muted small mb-0">&copy; {{ now.year }} Sans Library &middot; Sangeetha M &middot; All rights reserved.</p>
+    </div>
+</footer>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

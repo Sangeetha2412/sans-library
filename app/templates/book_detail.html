@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}{{ book.title }} — Sans Library{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            {% if book.get_image_list()|length > 0 %}
+            <div class="book-slideshow position-relative">
+                {% for img in book.get_image_list() %}
+                <img src="{{ img }}" class="slide-img {% if loop.first %}active{% endif %} w-100" style="max-height:500px;object-fit:contain;background:#120020" alt="Cover">
+                {% endfor %}
+                {% if book.get_image_list()|length > 1 %}
+                <button class="slide-nav-btn slide-prev"><i class="bi bi-chevron-left"></i></button>
+                <button class="slide-nav-btn slide-next"><i class="bi bi-chevron-right"></i></button>
+                <div class="slide-dots">
+                    {% for img in book.get_image_list() %}
+                    <div class="slide-dot {% if loop.first %}active{% endif %}"></div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <div class="glass-card p-4">
+                <span class="badge genre-badge mb-2">{{ book.genre }}</span>
+                <h1 class="text-white fw-bold mb-2">{{ book.title }}</h1>
+                <p class="text-muted mb-3">by <strong>{{ book.author }}</strong></p>
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    {% for i in range(5) %}
+                    <i class="bi bi-star{% if i < book.rating|int %}-fill{% endif %} text-warning"></i>
+                    {% endfor %}
+                    <span>{{ book.rating }}/5</span>
+                </div>
+                <hr class="border-secondary">
+                <div class="row g-2 mb-4 small">
+                    {% if book.pages %}<div class="col-6"><strong>Pages:</strong> {{ book.pages }}</div>{% endif %}
+                    {% if book.release_date %}<div class="col-6"><strong>Released:</strong> {{ book.release_date.strftime('%b %d, %Y') }}</div>{% endif %}
+                </div>
+                <h5 class="text-white mb-3">Description</h5>
+                <p class="text-muted mb-4">{{ book.description }}</p>
+                <div class="d-flex gap-2 flex-wrap">
+                    {% if book.pdf_link %}
+                    <a href="{{ url_for('public.download_book', book_id=book.id) }}" class="btn btn-glow">
+                        <i class="bi bi-download me-2"></i>Download PDF
+                    </a>
+                    {% endif %}
+                    {% if book.amazon_link %}
+                    <a href="{{ book.amazon_link }}" target="_blank" class="btn btn-outline-glow">
+                        <i class="bi bi-cart me-2"></i>Buy on Amazon
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if book.table_of_contents %}
+    <div class="glass-card p-4 mb-5">
+        <h5 class="text-white mb-3"><i class="bi bi-list-ul me-2"></i>Table of Contents</h5>
+        <p class="text-muted white-space-pre-wrap">{{ book.table_of_contents }}</p>
+    </div>
+    {% endif %}
+
+    {% if reviews %}
+    <div class="glass-card p-4 mb-5">
+        <h5 class="text-white mb-4"><i class="bi bi-chat-left-quote me-2"></i>Reader Reviews</h5>
+        {% for review in reviews %}
+        <div class="mb-3 pb-3 border-bottom border-secondary">
+            <div class="d-flex justify-content-between mb-1">
+                <strong class="text-white">{{ review.reviewer_name }}</strong>
+                <div class="text-warning">
+                    {% for i in range(5) %}
+                    <i class="bi bi-star{% if i < review.rating %}-fill{% endif %}"></i>
+                    {% endfor %}
+                </div>
+            </div>
+            <p class="text-muted small mb-1">{{ review.created_at.strftime('%b %d, %Y') }}</p>
+            {% if review.comment %}<p class="text-muted">{{ review.comment }}</p>{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="glass-card p-4 mb-5">
+        <h5 class="text-white mb-3"><i class="bi bi-pencil-square me-2"></i>Leave a Review</h5>
+        <form method="POST" action="{{ url_for('public.add_review', book_id=book.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+                <label class="form-label">Your Name</label>
+                <input type="text" name="reviewer_name" class="form-control glass-input" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Rating</label>
+                <div class="d-flex gap-2">
+                    {% for i in range(1, 6) %}
+                    <i class="bi bi-star star-input text-muted cursor-pointer" data-value="{{ i }}" style="font-size:1.5rem"></i>
+                    {% endfor %}
+                </div>
+                <input type="hidden" id="ratingInput" name="rating" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Your Review</label>
+                <textarea name="comment" class="form-control glass-input" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-glow w-100">Submit Review</button>
+        </form>
+    </div>
+
+    {% if related_books %}
+    <h5 class="text-white mb-4"><i class="bi bi-lightning-fill me-2 text-glow"></i>Related Books</h5>
+    <div class="row g-4 mb-5">
+        {% for rbook in related_books %}
+        <div class="col-md-3">
+            <div class="book-card h-100">
+                {% if rbook.get_first_image() %}
+                    <img src="{{ rbook.get_first_image() }}" class="book-cover" alt="{{ rbook.title }}">
+                {% else %}
+                    <div class="book-cover-placeholder"><i class="bi bi-book"></i></div>
+                {% endif %}
+                <div class="p-3">
+                    <h6 class="text-white mb-2">{{ rbook.title }}</h6>
+                    <a href="{{ url_for('public.book_detail', book_id=rbook.id) }}" class="btn btn-outline-glow btn-sm w-100">View</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

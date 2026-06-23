@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Settings — Sans Library Admin{% endblock %}
+{% block content %}
+<div style="display:flex;min-height:100vh;background:#090014">
+    <div class="admin-sidebar">
+        <div class="admin-logo"><i class="bi bi-speedometer2 me-2"></i>Dashboard</div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-house"></i>Dashboard</a>
+            <a class="nav-link" href="{{ url_for('admin.books') }}"><i class="bi bi-book"></i>Books</a>
+            <a class="nav-link" href="{{ url_for('admin.announcements') }}"><i class="bi bi-megaphone"></i>Announcements</a>
+            <a class="nav-link" href="{{ url_for('admin.messages') }}"><i class="bi bi-envelope"></i>Messages</a>
+            <a class="nav-link" href="{{ url_for('admin.subscribers') }}"><i class="bi bi-bell"></i>Subscribers</a>
+            <a class="nav-link active" href="{{ url_for('admin.settings') }}"><i class="bi bi-gear"></i>Settings</a>
+            <hr class="border-secondary my-2">
+            <a class="nav-link" href="{{ url_for('admin.logout') }}"><i class="bi bi-box-arrow-right"></i>Logout</a>
+        </nav>
+    </div>
+    <div class="admin-content">
+        <h2 class="text-white fw-bold mb-4">Site Settings</h2>
+        <form method="POST" class="glass-card p-5" style="max-width:700px">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-4">
+                <label class="form-label text-white"><i class="bi bi-image me-2"></i>Logo URL (Cloudinary)</label>
+                <input type="url" name="logo_url" class="form-control glass-input" value="{{ current_logo }}" placeholder="Paste Cloudinary image URL">
+                {% if current_logo %}<img src="{{ current_logo }}" height="40" class="mt-2" alt="Logo">{% endif %}
+            </div>
+            <div class="mb-4">
+                <label class="form-label text-white"><i class="bi bi-people me-2"></i>Readers Reached (for homepage)</label>
+                <input type="text" name="stat_readers" class="form-control glass-input" value="{{ stat_readers }}" placeholder="e.g., 10,000+">
+            </div>
+            <div class="mb-4">
+                <label class="form-label text-white"><i class="bi bi-globe me-2"></i>Countries Reached</label>
+                <input type="text" name="stat_countries" class="form-control glass-input" value="{{ stat_countries }}" placeholder="e.g., 25+">
+            </div>
+            <button type="submit" class="btn btn-glow w-100">Save Settings</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

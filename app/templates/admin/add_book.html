@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}Add Book — Sans Library Admin{% endblock %}
+{% block content %}
+<div style="display:flex;min-height:100vh;background:#090014">
+    <div class="admin-sidebar">
+        <div class="admin-logo"><i class="bi bi-speedometer2 me-2"></i>Dashboard</div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-house"></i>Dashboard</a>
+            <a class="nav-link active" href="{{ url_for('admin.books') }}"><i class="bi bi-book"></i>Books</a>
+            <a class="nav-link" href="{{ url_for('admin.announcements') }}"><i class="bi bi-megaphone"></i>Announcements</a>
+            <a class="nav-link" href="{{ url_for('admin.messages') }}"><i class="bi bi-envelope"></i>Messages</a>
+            <a class="nav-link" href="{{ url_for('admin.subscribers') }}"><i class="bi bi-bell"></i>Subscribers</a>
+            <a class="nav-link" href="{{ url_for('admin.settings') }}"><i class="bi bi-gear"></i>Settings</a>
+            <hr class="border-secondary my-2">
+            <a class="nav-link" href="{{ url_for('admin.logout') }}"><i class="bi bi-box-arrow-right"></i>Logout</a>
+        </nav>
+    </div>
+    <div class="admin-content">
+        <h2 class="text-white fw-bold mb-4">Add New Book</h2>
+        <form method="POST" class="glass-card p-5" style="max-width:700px">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+                <label class="form-label text-white">Title *</label>
+                <input type="text" name="title" class="form-control glass-input" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Author</label>
+                <input type="text" name="author" class="form-control glass-input" value="Sangeetha M">
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Genre *</label>
+                <select name="genre" class="form-control glass-input" required>
+                    <option value="Romance">Romance</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Poetry">Poetry</option>
+                    <option value="Motivation">Motivation</option>
+                    <option value="Short Stories">Short Stories</option>
+                    <option value="Science Fiction">Science Fiction</option>
+                    <option value="Adventure">Adventure</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Short Description</label>
+                <input type="text" name="short_description" class="form-control glass-input" placeholder="Max 300 chars">
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Full Description *</label>
+                <textarea name="description" class="form-control glass-input" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Image Links (Cloudinary URLs)</label>
+                {% for i in range(1, 6) %}
+                <input type="url" name="image_link_{{ i }}" class="form-control glass-input mb-2" placeholder="Image Link {{ i }}">
+                {% endfor %}
+                <small class="text-muted">Upload images on Cloudinary.com first, then paste URLs here</small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">PDF Link (Google Drive or direct)</label>
+                <input type="url" name="pdf_link" class="form-control glass-input">
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Amazon Link</label>
+                <input type="url" name="amazon_link" class="form-control glass-input">
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Pages</label>
+                <input type="number" name="pages" class="form-control glass-input">
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Release Date</label>
+                <input type="date" name="release_date" class="form-control glass-input">
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-white">Table of Contents</label>
+                <textarea name="table_of_contents" class="form-control glass-input" rows="3" placeholder="Chapter 1&#10;Chapter 2&#10;..."></textarea>
+            </div>
+            <div class="form-check mb-4">
+                <input type="checkbox" name="featured" class="form-check-input" id="featured">
+                <label class="form-check-label text-white" for="featured">Set as Featured Book</label>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-glow">Create Book</button>
+                <a href="{{ url_for('admin.books') }}" class="btn btn-outline-light">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

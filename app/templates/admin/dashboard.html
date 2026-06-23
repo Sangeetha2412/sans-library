@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard — Sans Library{% endblock %}
+{% block content %}
+<div style="display:flex;min-height:100vh;background:#090014">
+    <div class="admin-sidebar">
+        <div class="admin-logo"><i class="bi bi-speedometer2 me-2"></i>Dashboard</div>
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-house"></i>Dashboard</a>
+            <a class="nav-link" href="{{ url_for('admin.books') }}"><i class="bi bi-book"></i>Books</a>
+            <a class="nav-link" href="{{ url_for('admin.announcements') }}"><i class="bi bi-megaphone"></i>Announcements</a>
+            <a class="nav-link" href="{{ url_for('admin.messages') }}"><i class="bi bi-envelope"></i>Messages</a>
+            <a class="nav-link" href="{{ url_for('admin.subscribers') }}"><i class="bi bi-bell"></i>Subscribers</a>
+            <a class="nav-link" href="{{ url_for('admin.settings') }}"><i class="bi bi-gear"></i>Settings</a>
+            <hr class="border-secondary my-2">
+            <a class="nav-link" href="{{ url_for('admin.logout') }}"><i class="bi bi-box-arrow-right"></i>Logout</a>
+        </nav>
+    </div>
+    <div class="admin-content">
+        <h1 class="text-white fw-bold mb-4">Welcome, Admin!</h1>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <h3 class="text-glow fw-bold">{{ stats.total_books }}</h3>
+                    <p class="text-muted small">Total Books</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <h3 class="text-glow fw-bold">{{ stats.total_downloads }}</h3>
+                    <p class="text-muted small">Total Downloads</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <h3 class="text-glow fw-bold">{{ stats.total_subscribers }}</h3>
+                    <p class="text-muted small">Subscribers</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <h3 class="text-glow fw-bold">{{ stats.unread_messages }}</h3>
+                    <p class="text-muted small">Unread Messages</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

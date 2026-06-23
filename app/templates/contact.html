@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Contact — Sans Library{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center mb-5">
+                <h1 class="section-title">Get In <span class="text-glow">Touch</span></h1>
+                <p class="text-muted">Have a question or message for me? I'd love to hear from you!</p>
+            </div>
+            <form method="POST" class="glass-card p-5">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="mb-4">
+                    <label class="form-label text-white">Name</label>
+                    <input type="text" name="name" class="form-control glass-input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label text-white">Email</label>
+                    <input type="email" name="email" class="form-control glass-input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label text-white">Subject</label>
+                    <input type="text" name="subject" class="form-control glass-input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label text-white">Message</label>
+                    <textarea name="message" class="form-control glass-input" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-glow w-100">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

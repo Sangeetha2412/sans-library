@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Author — Sans Library{% endblock %}
+
+{% block content %}
+<section class="author-page py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+
+            <div class="col-md-4 text-center">
+                <div class="author-avatar-container mb-4">
+                    <div class="author-avatar author-avatar-main">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+
+                <div class="author-mini-badge">
+                    <i class="bi bi-feather me-2"></i>Writer • Dreamer • Creator
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <span class="author-label">
+                    <i class="bi bi-stars me-2"></i>Meet the Author
+                </span>
+
+                <h1 class="author-name mb-2">Sangeetha M</h1>
+
+                <p class="author-role mb-4">
+                    <i class="bi bi-pen me-2"></i>
+                    Author <span>•</span> BioComputing Student <span>•</span> Storyteller
+                </p>
+
+                <div class="author-story-card p-4 p-md-5 mb-4">
+                    <div class="quote-icon"><i class="bi bi-quote"></i></div>
+
+                    <p>
+                        Welcome to my literary universe! I'm Sangeetha, a passionate storyteller and author dedicated to crafting narratives that touch the heart and inspire the mind. With backgrounds in BioComputing and a deep love for storytelling, I weave together science, emotion, and imagination in every word.
+                    </p>
+
+                    <p class="mb-0">
+                        My journey as an author began with a simple belief: stories have the power to change lives. Through Sans Library, I share tales of romance, adventure, fantasy, and personal growth—each book a bridge between my world and yours.
+                    </p>
+                </div>
+
+                <div class="author-socials d-flex gap-3 flex-wrap">
+                    <a href="https://instagram.com/" target="_blank" class="author-social-btn" title="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+
+                    <a href="https://linkedin.com/" target="_blank" class="author-social-btn" title="LinkedIn">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+
+                    <a href="https://github.com/" target="_blank" class="author-social-btn" title="GitHub">
+                        <i class="bi bi-github"></i>
+                    </a>
+
+                    <a href="{{ url_for('public.contact') }}" class="author-social-btn author-contact-btn" title="Send a message">
+                        <i class="bi bi-envelope-fill"></i>
+                    </a>
+
+                    <a href="{{ url_for('public.contact') }}" class="btn author-message-btn">
+                        <i class="bi bi-chat-heart me-2"></i>Contact Me
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% if books %}
+        <div class="author-books-section mt-5 pt-5">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                <div>
+                    <span class="author-label">
+                        <i class="bi bi-book-half me-2"></i>Library Collection
+                    </span>
+                    <h3 class="author-books-title mt-2">
+                        Books by <span>Sangeetha</span>
+                    </h3>
+                </div>
+
+                <a href="{{ url_for('public.books') }}" class="btn author-view-books-btn">
+                    View All Books <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+
+            <div class="row g-4">
+                {% for book in books %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="book-card h-100">
+                        {% if book.get_first_image() %}
+                            <img src="{{ book.get_first_image() }}" class="book-cover" alt="{{ book.title }}">
+                        {% else %}
+                            <div class="book-cover-placeholder">
+                                <i class="bi bi-book"></i>
+                            </div>
+                        {% endif %}
+
+                        <div class="p-3">
+                            <h6 class="book-title-visible mb-2">{{ book.title }}</h6>
+                            <span class="badge genre-badge">{{ book.genre }}</span>
+
+                            <a href="{{ url_for('public.book_detail', book_id=book.id) }}"
+                               class="btn btn-glow btn-sm w-100 mt-3">
+                                <i class="bi bi-eye me-1"></i>View Book
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

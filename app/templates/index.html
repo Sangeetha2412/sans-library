@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block title %}Sans Library — Where Stories Find Their Readers{% endblock %}
+{% block content %}
+
+<!-- HERO -->
+<!-- HERO -->
+<section class="hero-section d-flex align-items-center justify-content-center text-center">
+    <div class="hero-particles" id="particles-bg"></div>
+
+    <!-- Floating book symbols -->
+    <i class="bi bi-book floating-book book-one"></i>
+    <i class="bi bi-book-half floating-book book-two"></i>
+    <i class="bi bi-journal-bookmark floating-book book-three"></i>
+    <i class="bi bi-bookmark-heart floating-book book-four"></i>
+    <i class="bi bi-feather floating-book feather-one"></i>
+
+    <div class="container position-relative z-1 py-5">
+        <div class="hero-badge mb-3">
+            <i class="bi bi-stars me-2"></i>Premium Author Platform
+        </div>
+
+        <div class="hero-library-icon mb-4">
+            <i class="bi bi-bookshelf"></i>
+        </div>
+
+        <h1 class="hero-title display-1 fw-black mb-3">
+            Stories That <span class="text-glow">Stay.</span>
+        </h1>
+
+        <p class="hero-sub lead mb-5 mx-auto">
+            Discover unforgettable books, meaningful journeys, and stories that remain with you long after the final page.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="{{ url_for('public.books') }}" class="btn btn-glow btn-lg px-4">
+                <i class="bi bi-book me-2"></i>Browse Books
+            </a>
+
+            <a href="{{ url_for('public.author') }}" class="btn btn-outline-glow btn-lg px-4">
+                <i class="bi bi-person-heart me-2"></i>Meet The Author
+            </a>
+        </div>
+
+        <!-- Decorative bookshelf -->
+        <div class="hero-bookshelf mt-5">
+            <div class="shelf-books">
+                <span class="shelf-book book-a"></span>
+                <span class="shelf-book book-b"></span>
+                <span class="shelf-book book-c"></span>
+                <span class="shelf-book book-d"></span>
+                <span class="shelf-book book-e"></span>
+                <span class="shelf-book book-f"></span>
+                <span class="shelf-book book-g"></span>
+                <span class="shelf-book book-h"></span>
+            </div>
+            <div class="shelf-line"></div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURED BOOK -->
+{% if featured_book %}
+<section class="featured-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="section-badge">⭐ Featured</span>
+            <h2 class="section-title mt-2">Featured <span class="text-glow">Book</span></h2>
+        </div>
+        <div class="row align-items-center g-4">
+            <div class="col-md-4 text-center">
+                {% if featured_book.get_first_image() %}
+                    <img src="{{ featured_book.get_first_image() }}" class="book-cover-lg img-fluid" alt="{{ featured_book.title }}">
+                {% else %}
+                    <div class="book-cover-placeholder-lg"><i class="bi bi-book"></i></div>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="glass-card p-4 p-md-5">
+                    <span class="badge genre-badge mb-3">{{ featured_book.genre }}</span>
+                    <h2 class="text-white fw-bold mb-2">{{ featured_book.title }}</h2>
+                    <p class="text-muted small mb-3">by {{ featured_book.author }}</p>
+                    <div class="d-flex align-items-center gap-2 mb-4">
+                        {% for i in range(5) %}
+                            <i class="bi bi-star{% if i < featured_book.rating|int %}-fill{% elif (i < featured_book.rating) %}-half{% endif %} text-warning"></i>
+                        {% endfor %}
+                        <span class="text-muted small">{{ featured_book.rating }}/5</span>
+                    </div>
+                    <p class="text-muted mb-4">{{ featured_book.description[:280] }}{% if featured_book.description|length > 280 %}...{% endif %}</p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="{{ url_for('public.book_detail', book_id=featured_book.id) }}" class="btn btn-glow">
+                            <i class="bi bi-eye me-2"></i>Read Sample
+                        </a>
+                        {% if featured_book.pdf_link %}
+                        <a href="{{ url_for('public.download_book', book_id=featured_book.id) }}" class="btn btn-outline-glow">
+                            <i class="bi bi-download me-2"></i>Download
+                        </a>
+                        {% endif %}
+                        {% if featured_book.amazon_link %}
+                        <a href="{{ featured_book.amazon_link }}" target="_blank" class="btn btn-outline-light">
+                            <i class="bi bi-cart me-2"></i>Buy Now
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- STATS -->
+<section class="stats-section py-5">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-6 col-md-3">
+                <div class="stat-card glass-card p-4">
+                    <div class="stat-number" data-target="{{ total_books }}">0</div>
+                    <div class="stat-label">Published Books</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card glass-card p-4">
+                    <div class="stat-number" data-target="{{ total_downloads }}">0</div>
+                    <div class="stat-label">Total Downloads</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card glass-card p-4">
+                    <div class="stat-number stat-text">{{ stat_readers }}</div>
+                    <div class="stat-label">Readers Reached</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card glass-card p-4">
+                    <div class="stat-number stat-text">{{ stat_countries }}</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- LATEST BOOKS -->
+{% if latest_books %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Latest <span class="text-glow">Releases</span></h2>
+        </div>
+        <div class="row g-4">
+            {% for book in latest_books %}
+            <div class="col-sm-6 col-md-4 col-lg-2">
+                <div class="book-card h-100">
+                    {% if book.get_first_image() %}
+                        <img src="{{ book.get_first_image() }}" class="book-cover" alt="{{ book.title }}">
+                    {% else %}
+                        <div class="book-cover-placeholder"><i class="bi bi-book"></i></div>
+                    {% endif %}
+                    <div class="p-3">
+                        <span class="badge genre-badge mb-1" style="font-size:0.65rem">{{ book.genre }}</span>
+                        <h6 class="text-white mb-1 mt-1" style="font-size:0.85rem">{{ book.title }}</h6>
+                        <a href="{{ url_for('public.book_detail', book_id=book.id) }}" class="btn btn-outline-glow btn-sm w-100 mt-2">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('public.books') }}" class="btn btn-glow px-5">View All Books</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

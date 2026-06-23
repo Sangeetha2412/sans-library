@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Announcements — Sans Library Admin{% endblock %}
+{% block content %}
+<div style="display:flex;min-height:100vh;background:#090014">
+    <div class="admin-sidebar">
+        <div class="admin-logo"><i class="bi bi-speedometer2 me-2"></i>Dashboard</div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-house"></i>Dashboard</a>
+            <a class="nav-link" href="{{ url_for('admin.books') }}"><i class="bi bi-book"></i>Books</a>
+            <a class="nav-link active" href="{{ url_for('admin.announcements') }}"><i class="bi bi-megaphone"></i>Announcements</a>
+            <a class="nav-link" href="{{ url_for('admin.messages') }}"><i class="bi bi-envelope"></i>Messages</a>
+            <a class="nav-link" href="{{ url_for('admin.subscribers') }}"><i class="bi bi-bell"></i>Subscribers</a>
+            <a class="nav-link" href="{{ url_for('admin.settings') }}"><i class="bi bi-gear"></i>Settings</a>
+            <hr class="border-secondary my-2">
+            <a class="nav-link" href="{{ url_for('admin.logout') }}"><i class="bi bi-box-arrow-right"></i>Logout</a>
+        </nav>
+    </div>
+    <div class="admin-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-white fw-bold">Announcements</h2>
+            <a href="{{ url_for('admin.add_announcement') }}" class="btn btn-glow"><i class="bi bi-plus me-2"></i>New</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-dark">
+                <thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
+                <tbody>
+                    {% for ann in announcements %}
+                    <tr>
+                        <td>{{ ann.title }}</td>
+                        <td>{{ ann.category }}</td>
+                        <td>{{ ann.created_at.strftime('%b %d, %Y') }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.edit_announcement', ann_id=ann.id) }}" class="btn btn-sm btn-outline-glow">Edit</a>
+                            <form method="POST" action="{{ url_for('admin.delete_announcement', ann_id=ann.id) }}" style="display:inline" onsubmit="return confirm('Delete?')">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
