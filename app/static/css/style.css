@@ -959,3 +959,10 @@ body .form-label.text-white {
         margin: 0 auto 12px;
     }
 }
+
+.featured-book-title {
+    color: #1d2b64;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
