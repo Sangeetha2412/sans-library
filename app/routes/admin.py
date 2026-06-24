@@ -268,6 +268,26 @@ def delete_subscriber(sub_id):
     flash('Subscriber removed.', 'success')
     return redirect(url_for('admin.subscribers'))
 
+# ── REVIEWS ───────────────────────────────────────────────────────
+
+@admin_bp.route('/reviews')
+@login_required
+def reviews():
+    all_reviews = Review.query.order_by(Review.created_at.desc()).all()
+    return render_template('admin/reviews.html', reviews=all_reviews)
+
+
+@admin_bp.route('/reviews/delete/<int:review_id>', methods=['POST'])
+@login_required
+def delete_review(review_id):
+    review = Review.query.get_or_404(review_id)
+
+    db.session.delete(review)
+    db.session.commit()
+
+    flash('Review deleted successfully.', 'success')
+    return redirect(url_for('admin.reviews'))
+
 
 # ── SETTINGS ──────────────────────────────────────────────────────
 
