@@ -3,6 +3,9 @@ from app import db, limiter
 from app.models import Book, Announcement, Subscriber, ContactMessage, Review, DownloadLog, SiteSettings
 
 public_bp = Blueprint('public', __name__)
+@public_bp.route("/health")
+def health():
+    return {"status": "ok", "message": "Sans Library is running"}, 200
 
 
 def get_logo():
